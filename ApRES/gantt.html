@@ -1,0 +1,52 @@
+<html>
+<head>
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script type="text/javascript">
+    google.charts.load('current', {'packages':['gantt']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('string', 'Task ID');
+      data.addColumn('string', 'Task Name');
+      data.addColumn('string', 'Resource');
+      data.addColumn('date', 'Start Date');
+      data.addColumn('date', 'End Date');
+      data.addColumn('number', 'Duration');
+      data.addColumn('number', 'Percent Complete');
+      data.addColumn('string', 'Dependencies');
+
+      data.addRows([
+        ['build', 'Build box ApRES', 'In-lab', new Date(2022, 0, 21), new Date(2022, 0, 28), null, 0, null],
+        ['SD check', 'Count SD Cards', 'In-lab', new Date(2022, 0, 21), new Date(2022, 0, 22), null, 0, null],
+        ['MATLAB', 'Install MATLAB (offline) on field laptops', 'In-lab', new Date(2022, 0, 21), new Date(2022, 0, 22), null, 0, null],
+        ['SD test', 'Test SD Cards', 'In-lab', new Date(2022, 0, 21), new Date(2022, 1, 4), null, 0, null],
+        ['test', 'Run ApRES for a long time', 'In-lab', new Date(2022, 0, 28), new Date(2022, 1, 11), null, 0, 'build,SD check,SD test'],
+        ['fieldbuild', 'Determine/acquire additional materials for sled', 'In-lab', new Date(2022, 0, 28), new Date(2022, 1, 18), null, 0, 'build'],
+        ['test1', 'Run additional testing', 'In-lab', new Date(2022, 1, 18), new Date(2022, 2, 4), null, 0, 'test,fieldbuild'],
+        ['pack', 'Pack for shipment', 'In-lab', new Date(2022, 2, 4), new Date(2022, 2, 11), null, 0, 'test1'],
+        ['write build', 'Write assembly instructions', 'Online', new Date(2022, 0, 22), new Date(2022, 1, 18), null, 0, null],
+        ['write run', 'Write deployment instructions', 'Online', new Date(2022, 1, 7), new Date(2022, 2, 4), null, 0, null],
+        ['old data', 'Look at old ApRES data/processing', 'Online', new Date(2022, 0, 22), new Date(2022, 1, 11), null, 10, null],
+        ['code', 'Update scripts to suit our data', 'Online', new Date(2022, 1, 11), new Date(2022, 2, 4), null, 0, null],
+        ['write code', 'Write processing instructions', 'Online', new Date(2022, 1, 25), new Date(2022, 2, 25), null, 0, null],
+      ]);
+
+      var options = {
+        height: 400,
+        gantt: {
+          trackHeight: 30
+        }
+      };
+
+      var chart = new google.visualization.Gantt(document.getElementById('chart_div'));
+
+      chart.draw(data, options);
+    }
+  </script>
+</head>
+<body>
+  <div id="chart_div"></div>
+</body>
+</html>
